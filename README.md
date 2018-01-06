@@ -1,38 +1,131 @@
-Role Name
-=========
+[![Build Status](https://travis-ci.org/FlorianKempenich/ansible-role-docker.svg?branch=master)](https://travis-ci.org/FlorianKempenich/ansible-role-docker) [![Ansible Role](https://img.shields.io/ansible/role/22817.svg)](https://galaxy.ansible.com/FlorianKempenich/docker)
 
-A brief description of the role goes here.
+# Ansible role: `nvm-node-npm`
+Install `NodeJs` & `npm` using `nvm` on Ubuntu/Debian and OSX.  
+Also provide a utility to enable the use of the `npm` module from `ansible` on a machine with `node` installed via `nvm`: `set-node-path-fact.yml`
 
-Requirements
-------------
+## How to use the `npm` module from `ansible` when installing `node` via `npm`?
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+Once `node` is installed with `nvm`, it requires an activation script in the `.bashrc` / `.zshrc` to be usable.
 
-Role Variables
---------------
+```
+export NVM_DIR="PATH TO YOUR NVM DIR" (default: "$HOME/.nvm")
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+```
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+Since `ansible` is running in non-interactive mode, it does not execute the `.bashrc` / `.zshrc`.
+Which means it will throw a `command not found: npm`, when trying to use the `npm` module from `ansible`.
 
-Dependencies
-------------
+To avoid that, it is possible to explicitely add the path of `node` to `PATH`.
+This is usually automatically done when sourcing `nvm.sh` in the `.bashrc` / `.zshrc`, but needs to be done manually if here.
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+```
+- npm:
+    name: PACKAGE_TO_INSTALL
+    state: latest
+    global: yes
+  become: no
+  environment:
+    PATH: "PATH_TO_NODE_EXECUTABLE:{{ ansible_env.PATH }}"
+```
 
-Example Playbook
-----------------
+This will work.
+Do not forget to append the content of the original `PATH` variable: ``{{ ansible_env.PATH }}`
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+**The only question that remains is, how to get the `PATH_TO_NODE_EXECUTABLE`.**  
+This is where the `set-node-path-fact.yml` becomes useful. 
+Running this list of tasks will set the path of the `node` executable to an **ansible fact**: `node_path`.
+Making it accessible for the rest of the Playbook.
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+Therefore, to use the `npm` module, the complete sequence is:
 
-License
--------
+```
+- include_tasks: set-node-path-fact.yml
+                     ^
+                     ^--- This sets the `node_path` fact.
 
-BSD
+...
+...
+...
 
-Author Information
-------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+- npm:
+    name: PACKAGE_TO_INSTALL
+    state: latest
+    global: yes
+  become: no
+  environment:
+    PATH: "{{ node_path }}:{{ ansible_env.PATH }}"
+               ^
+               ^--- This is set by the `set-node-path-fact.yml`
+
+```
+
+## Requirements
+This role is only working on Ubuntu/Debian & OSX.
+No other requirements.
+
+## Role Variables
+This playbook will install the latest version `NodeJs` using `nvm`.
+
+You can specify which version of `nvm` to use, as well as which version of `node` to install and set as default.
+
+* `nvm_version`: Optional - Eg. '0.33.5'
+* `node_version`: Optional - Eg. '6.11.4'
+
+Also you can specify where `nvm` should be installed:
+* `nvm_dir`: Optional - Default: "{{ ansible_env.HOME }}/.nvm"
+
+
+## Example Playbook
+Basic installation:
+```
+- hosts: sandbox
+  roles:
+      - FlorianKempenich.nvm-node-npm
+```
+
+With custom versions:
+```
+- hosts: sandbox
+  tasks:
+    - include_role:
+        name: FlorianKempenich.nvm-node-npm
+      vars:
+        nvm_version: '0.33.5'
+        node_version: '6.11.4'
+        nvm_dir: "{{ ansible_env.HOME }}/.nvm"
+```
+
+---
+
+To use the `npm` module from `ansible` later on:
+```
+- hosts: sandbox
+  tasks:
+    - include_tasks: set-node-path-fact.yml
+                        ^
+                        ^--- This sets the `node_path` fact.
+
+    ...
+    ...
+    ...
+
+
+    - npm:
+        name: PACKAGE_TO_INSTALL
+        state: latest
+        global: yes
+      become: no
+      environment:
+        PATH: "{{ node_path }}:{{ ansible_env.PATH }}"
+                  ^
+                  ^--- This is set by the `set-node-path-fact.yml`
+```
+
+## License
+MIT
+
+## Author Information
+Find out more about my work: [Florian Kempenich](https://floriankempenich.com)

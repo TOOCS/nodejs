@@ -1,2 +1,66 @@
----
-# tasks file for nvm-node-npm
+- name: "UBUNTU Only - Remove native node installation (w/o `nvm`)"
+  apt:
+    name: "{{ item }}"
+    state: absent
+    purge: yes
+    autoremove: yes
+  with_items:
+    - npm
+    - node
+  become: yes
+  when: ansible_os_family == "Debian"
+
+- name: "Check `nvm` version currently installed"
+  shell: |
+    if [ -s "{{ nvm_dir }}/nvm.sh" ]; then
+        . {{ nvm_dir }}/nvm.sh && nvm --version
+    else
+        echo 0
+    fi
+  become: no
+  register: result
+
+- set_fact:
+    preexisting_nvm_version: "{{ result.stdout }}"
+
+- name: "Info message"
+  debug:
+    msg: "Skipping `nvm` - `node` - `npm` installation ==> A more recent version of `nvm` is already installed."
+  when: preexisting_nvm_version >= nvm_version
+
+- block:
+    - name: "Cleanup previous installations"
+      file:
+        path: "{{ item }}"
+        state: absent
+      with_items:
+        - "{{ nvm_dir }}"
+        - "{{ ansible_env.HOME }}/.npm/"
+        - "/usr/local/lib/node_modules/"
+      become: yes
+
+    - name: "Install `nvm`"
+      git:
+        repo: 'https://github.com/creationix/nvm.git'
+        dest: "{{ nvm_dir }}"
+        version: "v{{ nvm_version }}"
+
+    - name: "Install `node` v{{ node_version }} and set as `default`"
+      shell: ". {{ nvm_dir }}/nvm.sh && nvm install {{ node_version }} && nvm alias default {{ node_version }}"
+      become: no
+      environment:
+        NVM_DIR: "{{ nvm_dir }}"
+
+    - name: "Set `node` path Fact"
+      include_tasks: set-node-path-fact.yml
+
+    - name: "Update `npm` - 3/3 - Update `npm`"
+      npm:
+        name: npm
+        state: latest
+        global: yes
+      become: no
+      environment:
+        PATH: "{{ node_path }}:{{ ansible_env.PATH }}"
+
+  when: preexisting_nvm_version < nvm_version
