@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/FlorianKempenich/ansible-role-docker.svg?branch=master)](https://travis-ci.org/FlorianKempenich/ansible-role-docker) [![Ansible Role](https://img.shields.io/ansible/role/22817.svg)](https://galaxy.ansible.com/FlorianKempenich/docker)
+[![Build Status](https://travis-ci.org/FlorianKempenich/ansible-role-nvm-node-npm.svg?branch=master)](https://travis-ci.org/FlorianKempenich/ansible-role-nvm-node-npm) [![Ansible Role](https://img.shields.io/ansible/role/23202.svg)](https://galaxy.ansible.com/FlorianKempenich/nvm-node-npm)
 
 # Ansible role: `nvm-node-npm`
 Install `NodeJs` & `npm` using `nvm` on Ubuntu/Debian and OSX.  
