@@ -41,9 +41,11 @@ Making it accessible for the rest of the Playbook.
 Therefore, to use the `npm` module, the complete sequence is:
 
 ```
-- include_tasks: set-node-path-fact.yml
-                     ^
-                     ^--- This sets the `node_path` fact.
+- include_role:
+    name: FlorianKempenich.nvm-node-npm
+    tasks_from: set-node-path-fact.yml
+                    ^
+                    ^--- This sets the `node_path` fact.
 
 ...
 ...
@@ -104,7 +106,10 @@ To use the `npm` module from `ansible` later on:
 ```
 - hosts: sandbox
   tasks:
-    - include_tasks: set-node-path-fact.yml
+
+    - include_role:
+        name: FlorianKempenich.nvm-node-npm
+        tasks_from: set-node-path-fact.yml
                         ^
                         ^--- This sets the `node_path` fact.
 
