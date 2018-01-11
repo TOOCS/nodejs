@@ -1,2 +1,4 @@
----
-# defaults file for nvm-node-npm
+nvm_version: '0.33.5'
+node_version: '6.11.4'
+
+nvm_dir: "{{ ansible_env.HOME }}/.nvm"
