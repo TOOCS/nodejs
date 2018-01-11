@@ -1,0 +1,9 @@
+- name: "Set `node` path fact - 1/2 - Get `node` path"
+  shell: ". {{ nvm_dir }}/nvm.sh && dirname $(which npm)"
+  register: result
+  environment:
+    NVM_DIR: "{{ nvm_dir }}"
+
+- name: "Set `node` path fact - 2/2 - Set as Fact"
+  set_fact:
+    node_path: "{{ result.stdout }}"
