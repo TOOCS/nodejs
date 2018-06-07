@@ -18,6 +18,7 @@
         echo 0
     fi
   become: no
+  check_mode: no
   register: result
 
 - set_fact:
