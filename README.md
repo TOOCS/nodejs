@@ -74,7 +74,7 @@ This playbook will install the latest version `NodeJs` using `nvm`.
 You can specify which version of `nvm` to use, as well as which version of `node` to install and set as default.
 
 * `nvm_version`: Optional - Default: '0.33.5'
-* `node_version`: Optional - Default: 'stable' - Can be specific version number Eg. '6.11.4'
+* `node_version`: Optional - Default: 'lts/*' - Can be specific version number Eg. '6.11.4'
 
 Also you can specify where `nvm` should be installed:
 * `nvm_dir`: Optional - Default: "{{ ansible_env.HOME }}/.nvm"

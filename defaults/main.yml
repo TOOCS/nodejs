@@ -1,5 +1,5 @@
 nvm_version: '0.33.8'
-node_version: 'stable'
+node_version: 'lts/*'
 
 # To use a specific version as default, use version number
 # node_version: '6.11.4'

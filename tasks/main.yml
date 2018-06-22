@@ -46,8 +46,8 @@
         dest: "{{ nvm_dir }}"
         version: "v{{ nvm_version }}"
 
-    - name: "Install `node` v{{ node_version }} and set as `default`"
-      shell: ". {{ nvm_dir }}/nvm.sh && nvm install {{ node_version }} && nvm alias default {{ node_version }}"
+    - name: "Install `node` '{{ node_version }}' and set as `default`"
+      shell: ". {{ nvm_dir }}/nvm.sh && nvm install {{ node_version }} && nvm alias default '{{ node_version }}'"
       become: no
       environment:
         NVM_DIR: "{{ nvm_dir }}"
