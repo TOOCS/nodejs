@@ -6,7 +6,7 @@ Also provide a utility to enable the use of the `npm` module from `ansible` on a
 
 ## How to use the `npm` module from `ansible` when installing `node` via `npm`?
 
-Once `node` is installed with `nvm`, it requires an activation script in the `.bashrc` / `.zshrc` to be usable.
+Once `node` is installed with `nvm`, it requires an activation script in the `.bash_profile` / `.zlogin` to be usable.
 
 ```
 export NVM_DIR="PATH TO YOUR NVM DIR" (default: "$HOME/.nvm")
@@ -14,11 +14,11 @@ export NVM_DIR="PATH TO YOUR NVM DIR" (default: "$HOME/.nvm")
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 ```
 
-Since `ansible` is running in non-interactive mode, it does not execute the `.bashrc` / `.zshrc`.
+Since `ansible` is running in non-interactive mode, it does not execute the `.bash_profile` / `.zlogin`.
 Which means it will throw a `command not found: npm`, when trying to use the `npm` module from `ansible`.
 
 To avoid that, it is possible to explicitely add the path of `node` to `PATH`.
-This is usually automatically done when sourcing `nvm.sh` in the `.bashrc` / `.zshrc`, but needs to be done manually if here.
+This is usually automatically done when sourcing `nvm.sh` in the `.bash_profile` / `.zlogin`, but needs to be done manually if here.
 
 ```
 - npm:
