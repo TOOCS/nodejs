@@ -1,6 +1,9 @@
 [![Build Status](https://travis-ci.org/FlorianKempenich/TOOCS-nodejs.svg?branch=master)](https://travis-ci.org/FlorianKempenich/TOOCS-nodejs) [![Ansible Role](https://img.shields.io/ansible/role/23202.svg)](https://galaxy.ansible.com/FlorianKempenich/toocs_nodejs)
 
+
 # TOOCS / Ansible Role: `toocs_nodejs`
+> #### /!\ This role has been renamed - Old name: `nvm-node-npm` /!\
+
 Install `NodeJs` & `npm` using `nvm` on Ubuntu/Debian and OSX.  
 Also provide a utility to enable the use of the `npm` module from `ansible` on a machine with `node` installed via `nvm`: `set-node-path-fact.yml`
 
