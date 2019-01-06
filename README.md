@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/FlorianKempenich/TOOCS-nodejs.svg?branch=master)](https://travis-ci.org/FlorianKempenich/TOOCS-nodejs) [![Ansible Role](https://img.shields.io/ansible/role/36090.svg)](https://galaxy.ansible.com/FlorianKempenich/toocs_nodejs)
+[![Build Status](https://travis-ci.org/FlorianKempenich/TOOCS-nodejs.svg?branch=master)](https://travis-ci.org/FlorianKempenich/TOOCS-nodejs) [![Ansible Role](https://img.shields.io/ansible/role/36094.svg)](https://galaxy.ansible.com/FlorianKempenich/toocs_nodejs)
 
 
 # TOOCS / Ansible Role: `toocs_nodejs`
