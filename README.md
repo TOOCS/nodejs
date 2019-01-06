@@ -1,8 +1,14 @@
-[![Build Status](https://travis-ci.org/FlorianKempenich/ansible-role-nvm-node-npm.svg?branch=master)](https://travis-ci.org/FlorianKempenich/ansible-role-nvm-node-npm) [![Ansible Role](https://img.shields.io/ansible/role/23202.svg)](https://galaxy.ansible.com/FlorianKempenich/nvm-node-npm)
+[![Build Status](https://travis-ci.org/FlorianKempenich/TOOCS-nodejs.svg?branch=master)](https://travis-ci.org/FlorianKempenich/TOOCS-nodejs) [![Ansible Role](https://img.shields.io/ansible/role/23202.svg)](https://galaxy.ansible.com/FlorianKempenich/toocs_nodejs)
 
-# Ansible role: `nvm-node-npm`
+# TOOCS / Ansible Role: `toocs_nodejs`
 Install `NodeJs` & `npm` using `nvm` on Ubuntu/Debian and OSX.  
 Also provide a utility to enable the use of the `npm` module from `ansible` on a machine with `node` installed via `nvm`: `set-node-path-fact.yml`
+
+> ### TOOCS?
+> TOOCS - The Opinionated One-Click Setups are a set of tools / ansible roles designed to setup a system in one click. They are a simple, reliable, way to setup a given tool. You can use them as is, or, inspecting their code, as a tutorial to follow step by step.
+> 
+> They are, as their name suggests, opinionated: while they guarantee to setup the given tool in one click, they do **not** guarantee consistency in _how_ they achieve it, new releases might introduce breaking changes.  
+> Read the code and make sure you understand what's happening!
 
 ## How to use the `npm` module from `ansible` when installing `node` via `npm`?
 
@@ -42,7 +48,7 @@ Therefore, to use the `npm` module, the complete sequence is:
 
 ```
 - include_role:
-    name: FlorianKempenich.nvm-node-npm
+    name: FlorianKempenich.toocs_nodejs
     tasks_from: set-node-path-fact.yml
                     ^
                     ^--- This sets the `node_path` fact.
@@ -85,7 +91,7 @@ Basic installation:
 ```
 - hosts: sandbox
   roles:
-      - FlorianKempenich.nvm-node-npm
+      - FlorianKempenich.toocs_nodejs
 ```
 
 With custom versions:
@@ -93,7 +99,7 @@ With custom versions:
 - hosts: sandbox
   tasks:
     - include_role:
-        name: FlorianKempenich.nvm-node-npm
+        name: FlorianKempenich.toocs_nodejs
       vars:
         nvm_version: '0.33.5'
         node_version: '6.11.4'
@@ -108,7 +114,7 @@ To use the `npm` module from `ansible` later on:
   tasks:
 
     - include_role:
-        name: FlorianKempenich.nvm-node-npm
+        name: FlorianKempenich.toocs_nodejs
         tasks_from: set-node-path-fact.yml
                         ^
                         ^--- This sets the `node_path` fact.
