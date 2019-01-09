@@ -1,5 +1,5 @@
 galaxy_info:
-  role_name: toocs_nodejs
+  role_name: nodejs
   author: Florian Kempenich
   description: Install `NodeJs` & `npm` using `nvm` on Ubuntu/Debian and OSX.
 

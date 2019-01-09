@@ -1,8 +1,8 @@
-[![Build Status](https://travis-ci.org/TOOCS/nodejs.svg?branch=master)](https://travis-ci.org/TOOCS/nodejs) [![Ansible Role](https://img.shields.io/ansible/role/36157.svg)](https://galaxy.ansible.com/FlorianKempenich/toocs_nodejs)
+[![Build Status](https://travis-ci.org/TOOCS/nodejs.svg?branch=master)](https://travis-ci.org/TOOCS/nodejs) [![Ansible Role](https://img.shields.io/ansible/role/36157.svg)](https://galaxy.ansible.com/TOOCS/toocs_nodejs)
 
 
-# TOOCS / Ansible Role: `FlorianKempenich.toocs_nodejs`
-> #### /!\ This role has been renamed - Old name: `nvm-node-npm` /!\
+# TOOCS / Ansible Role: `TOOCS.nodejs`
+> #### /!\ This role has been renamed - Old name: `FlorianKempenich.nvm-node-npm` /!\
 
 Install `NodeJs` & `npm` using `nvm` on Ubuntu/Debian and OSX.  
 Also provide a utility to enable the use of the `npm` module from `ansible` on a machine with `node` installed via `nvm`: `set-node-path-fact.yml`
@@ -51,7 +51,7 @@ Therefore, to use the `npm` module, the complete sequence is:
 
 ```
 - include_role:
-    name: FlorianKempenich.toocs_nodejs
+    name: TOOCS.nodejs
     tasks_from: set-node-path-fact.yml
                     ^
                     ^--- This sets the `node_path` fact.
@@ -94,7 +94,7 @@ Basic installation:
 ```
 - hosts: sandbox
   roles:
-      - FlorianKempenich.toocs_nodejs
+      - TOOCS.nodejs
 ```
 
 With custom versions:
@@ -102,7 +102,7 @@ With custom versions:
 - hosts: sandbox
   tasks:
     - include_role:
-        name: FlorianKempenich.toocs_nodejs
+        name: TOOCS.nodejs
       vars:
         nvm_version: '0.33.5'
         node_version: '6.11.4'
@@ -117,7 +117,7 @@ To use the `npm` module from `ansible` later on:
   tasks:
 
     - include_role:
-        name: FlorianKempenich.toocs_nodejs
+        name: TOOCS.nodejs
         tasks_from: set-node-path-fact.yml
                         ^
                         ^--- This sets the `node_path` fact.
