@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/TOOCS/nodejs.svg?branch=master)](https://travis-ci.org/TOOCS/nodejs) [![Ansible Role](https://img.shields.io/ansible/role/36157.svg)](https://galaxy.ansible.com/TOOCS/toocs_nodejs)
+[![Build Status](https://travis-ci.org/TOOCS/nodejs.svg?branch=master)](https://travis-ci.org/TOOCS/nodejs) [![Ansible Role](https://img.shields.io/ansible/role/36197.svg)](https://galaxy.ansible.com/TOOCS/nodejs)
 
 
 # TOOCS / Ansible Role: `TOOCS.nodejs`
